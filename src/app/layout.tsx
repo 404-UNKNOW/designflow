@@ -28,55 +28,57 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 min-h-screen`}
       >
-        <header className="w-full bg-white shadow-sm mb-6">
+        <header className="w-full bg-white/80 backdrop-blur shadow-sm mb-6 sticky top-0 z-50 border-b border-gray-100">
           <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
             <Link
               href="/"
-              className="text-xl font-bold text-indigo-700"
+              className="text-2xl font-extrabold text-indigo-700 tracking-tight drop-shadow"
             >
               DesignFlow Pro
             </Link>
-            <div className="flex gap-4">
+            <div className="flex gap-4 text-base font-medium">
               <Link
                 href="/dashboard"
-                className="text-gray-700 hover:text-indigo-600"
+                className="text-gray-700 hover:text-indigo-600 transition"
               >
                 仪表盘
               </Link>
               <Link
                 href="/projects"
-                className="text-gray-700 hover:text-indigo-600"
+                className="text-gray-700 hover:text-indigo-600 transition"
               >
                 项目管理
               </Link>
               <Link
                 href="/clients"
-                className="text-gray-700 hover:text-indigo-600"
+                className="text-gray-700 hover:text-indigo-600 transition"
               >
                 客户管理
               </Link>
               <Link
                 href="/tools/proposal-generator"
-                className="text-gray-700 hover:text-indigo-600"
+                className="text-gray-700 hover:text-indigo-600 transition"
               >
                 AI提案
               </Link>
               <Link
                 href="/tools/invoice-generator"
-                className="text-gray-700 hover:text-indigo-600"
+                className="text-gray-700 hover:text-indigo-600 transition"
               >
                 发票
               </Link>
               <Link
                 href="/tools/feedback-collector"
-                className="text-gray-700 hover:text-indigo-600"
+                className="text-gray-700 hover:text-indigo-600 transition"
               >
                 反馈
               </Link>
             </div>
           </nav>
         </header>
-        <main className="min-h-[80vh]">{children}</main>
+        <main className="min-h-[80vh] flex flex-col items-center justify-center">
+          {children}
+        </main>
       </body>
     </html>
   );
