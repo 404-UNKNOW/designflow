@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,57 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 min-h-screen`}
       >
-        {children}
+        <header className="w-full bg-white shadow-sm mb-6">
+          <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+            <Link
+              href="/"
+              className="text-xl font-bold text-indigo-700"
+            >
+              DesignFlow Pro
+            </Link>
+            <div className="flex gap-4">
+              <Link
+                href="/dashboard"
+                className="text-gray-700 hover:text-indigo-600"
+              >
+                仪表盘
+              </Link>
+              <Link
+                href="/projects"
+                className="text-gray-700 hover:text-indigo-600"
+              >
+                项目管理
+              </Link>
+              <Link
+                href="/clients"
+                className="text-gray-700 hover:text-indigo-600"
+              >
+                客户管理
+              </Link>
+              <Link
+                href="/tools/proposal-generator"
+                className="text-gray-700 hover:text-indigo-600"
+              >
+                AI提案
+              </Link>
+              <Link
+                href="/tools/invoice-generator"
+                className="text-gray-700 hover:text-indigo-600"
+              >
+                发票
+              </Link>
+              <Link
+                href="/tools/feedback-collector"
+                className="text-gray-700 hover:text-indigo-600"
+              >
+                反馈
+              </Link>
+            </div>
+          </nav>
+        </header>
+        <main className="min-h-[80vh]">{children}</main>
       </body>
     </html>
   );
