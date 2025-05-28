@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 
 export default function InvoiceGenerator() {
   const [projectId, setProjectId] = useState("");
-  const [amount, setAmount] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [items, setItems] = useState([{ description: "", amount: "" }]);
   const [notes, setNotes] = useState("");

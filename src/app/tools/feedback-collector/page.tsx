@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 
 export default function FeedbackCollector() {
   const [projectId, setProjectId] = useState("");
   const [feedbackLink, setFeedbackLink] = useState("");
-  const router = useRouter();
 
   const handleGenerateLink = async () => {
     const { data: { user } } = await supabase.auth.getUser();
