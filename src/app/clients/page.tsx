@@ -1,8 +1,27 @@
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase/client";
 import Link from "next/link";
 
+interface Client {
+  id: string;
+  name: string;
+  email: string;
+  company?: string;
+}
+
 export default function ClientsPage() {
-  // TODO: 这里应从 supabase 拉取客户数据
-  const clients: { id: string; name: string; email: string; company?: string }[] = [];
+  const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      setLoading(true);
+      const { data, error } = await supabase.from("clients").select("id, name, email, company");
+      if (!error && data) setClients(data);
+      setLoading(false);
+    };
+    fetchClients();
+  }, []);
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -21,22 +40,23 @@ export default function ClientsPage() {
             </tr>
           </thead>
           <tbody>
-            {clients.length === 0 && (
-              <tr>
-                <td colSpan={4} className="py-6 text-center text-gray-400">暂无客户</td>
-              </tr>
+            {loading ? (
+              <tr><td colSpan={4} className="py-6 text-center text-gray-400">加载中...</td></tr>
+            ) : clients.length === 0 ? (
+              <tr><td colSpan={4} className="py-6 text-center text-gray-400">暂无客户</td></tr>
+            ) : (
+              clients.map((client) => (
+                <tr key={client.id} className="border-b">
+                  <td className="py-2 font-semibold text-green-700">{client.name}</td>
+                  <td className="py-2">{client.email}</td>
+                  <td className="py-2">{client.company || "-"}</td>
+                  <td className="py-2">
+                    <Link href={`/clients/${client.id}`} className="text-indigo-600 hover:underline mr-2">详情</Link>
+                    <button className="text-red-500 hover:underline">删除</button>
+                  </td>
+                </tr>
+              ))
             )}
-            {clients.map((client) => (
-              <tr key={client.id} className="border-b">
-                <td className="py-2 font-semibold text-green-700">{client.name}</td>
-                <td className="py-2">{client.email}</td>
-                <td className="py-2">{client.company || "-"}</td>
-                <td className="py-2">
-                  <Link href={`/clients/${client.id}`} className="text-indigo-600 hover:underline mr-2">详情</Link>
-                  <button className="text-red-500 hover:underline">删除</button>
-                </td>
-              </tr>
-            ))}
           </tbody>
         </table>
       </div>
