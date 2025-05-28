@@ -29,14 +29,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 min-h-screen`}
       >
         <header className="w-full bg-white/80 backdrop-blur shadow-sm mb-6 sticky top-0 z-50 border-b border-gray-100">
-          <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+          <nav className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-2 sm:px-4 py-3 gap-2 sm:gap-0">
             <Link
               href="/"
-              className="text-2xl font-extrabold text-indigo-700 tracking-tight drop-shadow"
+              className="text-xl sm:text-2xl font-extrabold text-indigo-700 tracking-tight drop-shadow"
             >
               DesignFlow Pro
             </Link>
-            <div className="flex gap-4 text-base font-medium">
+            <div className="flex flex-wrap gap-2 sm:gap-4 text-base font-medium justify-center">
               <Link
                 href="/dashboard"
                 className="text-gray-700 hover:text-indigo-600 transition"
@@ -76,7 +76,7 @@ export default function RootLayout({
             </div>
           </nav>
         </header>
-        <main className="min-h-[80vh] flex flex-col items-center justify-center">
+        <main className="min-h-[80vh] flex flex-col items-center justify-center px-2 sm:px-0">
           {children}
         </main>
       </body>
