@@ -65,7 +65,7 @@ export default async function Dashboard() {
         <h2 className="text-lg font-bold mb-4">最近项目</h2>
         <ul className="divide-y divide-gray-100">
           {(recentProjects || []).length === 0 && <li className="py-4 text-gray-400">暂无项目</li>}
-          {(recentProjects || []).map((proj: any) => (
+          {(recentProjects || []).map((proj: { id: string; title: string; clients?: { name?: string } }) => (
             <li key={proj.id} className="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <div className="font-semibold text-indigo-700">{proj.title}</div>
