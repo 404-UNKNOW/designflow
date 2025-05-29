@@ -1,6 +1,21 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase/client";
 import Link from "next/link";
 
 export default function Home() {
+  const [user, setUser] = useState<{ id: string; email: string } | null>(null);
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user && data.user.id && data.user.email) {
+        setUser({ id: data.user.id, email: data.user.email });
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-indigo-50 p-4 sm:p-6 relative overflow-hidden">
       {/* 背景装饰 */}
@@ -20,9 +35,9 @@ export default function Home() {
           <span className="font-semibold text-yellow-600">设计反馈收集</span> 等功能，助你高效、专业、轻松接单！
         </p>
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mb-8">
-          <Link href="/dashboard" className="flex-1">
+          <Link href={user ? "/dashboard" : "/(auth)/login"} className="flex-1">
             <button className="w-full px-4 py-3 sm:px-6 sm:py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-lg hover:bg-indigo-700 transition text-base sm:text-lg tracking-wide">
-              进入仪表盘
+              {user ? "进入仪表盘" : "登录/注册"}
             </button>
           </Link>
           <Link href="/tools/proposal-generator" className="flex-1">
@@ -30,6 +45,29 @@ export default function Home() {
               AI提案生成器
             </button>
           </Link>
+        </div>
+        {/* 新增：产品亮点/核心功能卡片 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8">
+          <div className="bg-white/80 rounded-xl shadow p-5 flex flex-col items-center text-center">
+            <span className="text-3xl mb-2">🤖</span>
+            <div className="font-bold text-indigo-700 mb-1">AI智能提案</div>
+            <div className="text-gray-500 text-sm">一键生成专业项目方案，提升中标率</div>
+          </div>
+          <div className="bg-white/80 rounded-xl shadow p-5 flex flex-col items-center text-center">
+            <span className="text-3xl mb-2">👥</span>
+            <div className="font-bold text-green-700 mb-1">客户/项目管理</div>
+            <div className="text-gray-500 text-sm">高效管理客户与项目，支持移动端操作</div>
+          </div>
+          <div className="bg-white/80 rounded-xl shadow p-5 flex flex-col items-center text-center">
+            <span className="text-3xl mb-2">🧾</span>
+            <div className="font-bold text-blue-700 mb-1">自动发票</div>
+            <div className="text-gray-500 text-sm">一键生成、下载、发送发票，省时省心</div>
+          </div>
+          <div className="bg-white/80 rounded-xl shadow p-5 flex flex-col items-center text-center">
+            <span className="text-3xl mb-2">💬</span>
+            <div className="font-bold text-yellow-600 mb-1">设计反馈收集</div>
+            <div className="text-gray-500 text-sm">便捷收集客户反馈，提升交付体验</div>
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
           <Link href="/tools/invoice-generator" className="flex-1">
